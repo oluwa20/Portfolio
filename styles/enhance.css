@@ -1,0 +1,445 @@
+/* ==========================================================================
+   enhance.css — refinement layer over styles.css
+   Loaded after styles.css. Removing this one <link> restores the original.
+   ========================================================================== */
+
+:root {
+  --color-primary: #10141f;
+  --color-secondary: #2ecc71;
+  --accent-soft: rgba(46, 204, 113, 0.12);
+  --accent-line: rgba(46, 204, 113, 0.35);
+  --line: rgba(255, 255, 255, 0.08);
+  --surface: rgba(255, 255, 255, 0.028);
+  --surface-hi: rgba(255, 255, 255, 0.055);
+  --br: 16px;
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.35), 0 14px 34px -18px rgba(0, 0, 0, 0.75);
+  --shadow-lift: 0 10px 34px -12px rgba(46, 204, 113, 0.22), 0 26px 56px -28px rgba(0, 0, 0, 0.9);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.light-mode {
+  --color-secondary: #128a4a;
+  --accent-soft: rgba(18, 138, 74, 0.10);
+  --accent-line: rgba(18, 138, 74, 0.28);
+  --line: rgba(20, 26, 40, 0.10);
+  --surface: rgba(20, 26, 40, 0.025);
+  --surface-hi: rgba(20, 26, 40, 0.05);
+  --shadow-soft: 0 1px 2px rgba(20, 26, 40, 0.06), 0 14px 34px -20px rgba(20, 26, 40, 0.28);
+  --shadow-lift: 0 10px 30px -12px rgba(18, 138, 74, 0.18), 0 24px 50px -28px rgba(20, 26, 40, 0.35);
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: 0.005em;
+}
+
+::selection { background: var(--color-secondary); color: #06110a; }
+
+/* keyboard focus — the original had none */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+.control:focus-visible,
+.theme-btn:focus-visible {
+  outline: 2px solid var(--color-secondary);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ---------- ambient depth (subtle, not a gradient wash) ---------- */
+.header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(52% 46% at 16% 26%, var(--accent-soft), transparent 72%),
+    radial-gradient(40% 40% at 88% 82%, rgba(255, 255, 255, 0.035), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+.header .header-content { position: relative; z-index: 1; }
+
+/* ---------- hero ---------- */
+.header-content .left-header .image {
+  border-radius: var(--br);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+}
+.header-content .left-header .image img {
+  transition: transform 0.9s var(--ease), filter 0.6s ease;
+  filter: saturate(1.02) contrast(1.03);
+}
+.header-content .left-header .image:hover img { transform: scale(1.04); }
+
+.header-content .right-header .name {
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+}
+.header-content .right-header .name span { position: relative; }
+.header-content .right-header p {
+  color: var(--color-grey-2);
+  line-height: 1.75;
+  max-width: 60ch;
+}
+
+/* ---------- section titles ---------- */
+.main-title h2 { letter-spacing: -0.02em; }
+.main-title h2 .bg-text { opacity: 0.35; }
+
+.stat-title {
+  position: relative;
+  letter-spacing: -0.01em;
+}
+.stat-title::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -10px;
+  width: 46px;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--color-secondary);
+  transform: translateX(-50%);
+}
+
+/* ---------- bio + stat cards ---------- */
+.about-container .left-about p {
+  color: var(--color-grey-2);
+  line-height: 1.85;
+}
+
+.about-container .right-about .about-item {
+  border: 1px solid var(--line);
+  border-radius: var(--br);
+  background: var(--surface);
+  box-shadow: none;
+  transition: transform 0.4s var(--ease), border-color 0.4s ease,
+              background 0.4s ease, box-shadow 0.4s ease;
+}
+.about-container .right-about .about-item:hover {
+  transform: translateY(-6px);
+  border-color: var(--accent-line);
+  background: var(--surface-hi);
+  box-shadow: var(--shadow-lift);
+}
+.about-container .right-about .about-item .abt-text .large-text {
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  background: linear-gradient(180deg, var(--color-secondary), color-mix(in srgb, var(--color-secondary) 62%, #ffffff));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.about-container .right-about .about-item .abt-text .small-text {
+  letter-spacing: 0.02em;
+  line-height: 1.45;
+}
+.about-container .right-about .about-item .abt-text .small-text::before { opacity: 0.5; }
+
+/* ---------- skills ---------- */
+.about-stats .progress-bars .progress-bar .prog-title {
+  letter-spacing: 0.01em;
+  font-weight: 600;
+}
+.about-stats .progress-bars .progress-bar .progress-con .progress {
+  background-color: var(--color-grey-4);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.about-stats .progress-bars .progress-bar .progress-con .progress span {
+  border-radius: 999px;
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--color-secondary) 72%, #0d2a1a),
+    var(--color-secondary));
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+.about.active .about-stats .progress-bars .progress-bar .progress-con .progress span {
+  animation: barGrow 1.15s var(--ease) forwards;
+}
+@keyframes barGrow { to { transform: scaleX(1); } }
+.about-stats .progress-bars .progress-bar .progress-con .prog-text {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.75;
+}
+
+/* ---------- timeline ---------- */
+.timeline .timeline-item { transition: transform 0.4s var(--ease); }
+.timeline .timeline-item:hover { transform: translateX(4px); }
+.timeline .timeline-item .tl-icon {
+  box-shadow: 0 0 0 6px var(--accent-soft);
+  transition: box-shadow 0.4s ease, transform 0.4s var(--ease);
+}
+.timeline .timeline-item:hover .tl-icon {
+  box-shadow: 0 0 0 10px var(--accent-soft);
+  transform: scale(1.05);
+}
+.timeline .timeline-item .tl-duration {
+  border-radius: 999px;
+  letter-spacing: 0.04em;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  background-color: var(--surface-hi);
+  border: 1px solid var(--line);
+}
+.timeline .timeline-item h5 { letter-spacing: -0.01em; }
+.timeline .timeline-item h5 span { color: var(--color-grey-2); }
+.timeline .timeline-item p { color: var(--color-grey-2); line-height: 1.75; }
+
+/* ---------- portfolio ---------- */
+.port-text { color: var(--color-grey-2); line-height: 1.75; }
+
+.portfolios .portfolio-item {
+  border-radius: var(--br);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  transition: transform 0.45s var(--ease), border-color 0.4s ease, box-shadow 0.45s var(--ease);
+}
+.portfolios .portfolio-item:hover {
+  transform: translateY(-8px);
+  border-color: var(--accent-line);
+  box-shadow: var(--shadow-lift);
+}
+.portfolios .portfolio-item .image { overflow: hidden; border-radius: 0; }
+.portfolios .portfolio-item img {
+  border-radius: 0;
+  height: 260px;
+  transition: transform 0.8s var(--ease), filter 0.5s ease;
+}
+.portfolios .portfolio-item:hover img { transform: scale(1.07); }
+
+/* card caption under the image */
+.portfolios .portfolio-item > h2 {
+  font-size: 1.05rem;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  padding: 1.1rem 1.2rem 1.3rem;
+  margin: 0;
+}
+
+/* hover overlay: slide up rather than plain fade */
+.portfolios .portfolio-item .hover-items {
+  border-radius: 0;
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--color-secondary) 88%, #04120a),
+    color-mix(in srgb, var(--color-secondary) 62%, #04120a));
+  transform: translateY(14px);
+  transition: opacity 0.42s var(--ease), transform 0.42s var(--ease);
+  padding: 1.6rem;
+  text-align: center;
+}
+.portfolios .portfolio-item:hover .hover-items { transform: translateY(0); }
+.portfolios .portfolio-item .hover-items h3 {
+  font-size: 1.05rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  opacity: 0.92;
+}
+.portfolios .portfolio-item .hover-items .icons { flex-direction: column; gap: 1rem; }
+.portfolios .portfolio-item .hover-items .icons .icon {
+  background-color: rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  margin: 0;
+}
+.portfolios .portfolio-item .hover-items .icons .icon:hover {
+  background-color: #ffffff;
+  transform: translateY(-3px);
+}
+.portfolios .portfolio-item .hover-items .icons .icon:hover i { color: var(--color-secondary); }
+.portfolios .portfolio-item .hover-items .icons h2 {
+  font-size: 0.86rem;
+  font-weight: 400;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0 0.4rem;
+  color: rgba(255, 255, 255, 0.94);
+  max-width: 34ch;
+}
+
+/* ---------- contact ---------- */
+.contact-content-con .left-contact h4 { letter-spacing: -0.01em; }
+.contact-content-con .left-contact .contact-item {
+  border-radius: 12px;
+  padding: 0.35rem 0.1rem;
+  transition: transform 0.35s var(--ease);
+}
+.contact-content-con .left-contact .contact-item:hover { transform: translateX(4px); }
+.contact-content-con .left-contact .contact-item .icon i { color: var(--color-secondary); }
+
+.contact-content-con .contact-icon a {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  transition: transform 0.35s var(--ease), background 0.35s ease,
+              border-color 0.35s ease, box-shadow 0.35s ease;
+}
+.contact-content-con .contact-icon a:hover {
+  background: var(--color-secondary);
+  border-color: var(--color-secondary);
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lift);
+}
+
+.contact-content-con .right-contact .input-control input,
+.contact-content-con .right-contact .input-control textarea {
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background-color: var(--surface);
+  transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+.contact-content-con .right-contact .input-control input:focus,
+.contact-content-con .right-contact .input-control textarea:focus {
+  outline: none;
+  border-color: var(--color-secondary);
+  background-color: var(--surface-hi);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+.contact-content-con .right-contact .input-control input::placeholder,
+.contact-content-con .right-contact .input-control textarea::placeholder {
+  color: var(--color-grey-3);
+  letter-spacing: 0.04em;
+}
+
+/* send button (added in markup) */
+.send-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.9rem 1.9rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #06110a;
+  background: var(--color-secondary);
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), filter 0.3s ease;
+}
+.send-btn:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); filter: brightness(1.06); }
+.send-btn:active { transform: translateY(-1px); }
+.form-note {
+  margin-top: 0.9rem;
+  font-size: 0.86rem;
+  color: var(--color-grey-3);
+  line-height: 1.6;
+}
+
+/* ---------- fixed controls ---------- */
+.controls {
+  padding: 0.6rem 0.4rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--color-primary) 82%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.controls .control {
+  margin: 0.5rem 0.35rem;
+  border: 1px solid transparent;
+  transition: transform 0.35s var(--ease), background 0.35s ease, border-color 0.35s ease;
+}
+.controls .control:hover { transform: scale(1.1); border-color: var(--accent-line); }
+.controls .active-btn { box-shadow: 0 0 0 5px var(--accent-soft); }
+
+.theme-btn {
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.4s var(--ease), box-shadow 0.4s ease;
+}
+.theme-btn:hover { transform: translateY(-3px) rotate(12deg); }
+
+/* ---------- motion & small screens ---------- */
+@media screen and (max-width: 1200px) {
+  .portfolios .portfolio-item img { height: 230px; }
+}
+@media screen and (max-width: 600px) {
+  .portfolios .portfolio-item > h2 { font-size: 1rem; padding: 1rem; }
+  .header::before { background: radial-gradient(70% 40% at 50% 12%, var(--accent-soft), transparent 70%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .about.active .about-stats .progress-bars .progress-bar .progress-con .progress span {
+    transform: scaleX(1);
+  }
+}
+
+/* ---------- contact layout fixes ---------- */
+.contact-content-con .right-contact .submit-btn {
+  display: block !important;
+  margin-top: 1.4rem;
+}
+.send-btn { white-space: nowrap; }
+.form-note { max-width: 46ch; }
+
+/* label / value rows: keep the colon aligned and stop ragged wrapping */
+.contact-content-con .left-contact .contact-item {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  align-items: start;
+  column-gap: 0.6rem;
+}
+.contact-content-con .left-contact .contact-item .icon {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0;
+}
+.contact-content-con .left-contact .contact-item .icon span { white-space: nowrap; }
+.contact-content-con .left-contact .contact-item p {
+  margin: 0;
+  line-height: 1.6;
+  word-break: break-word;
+}
+.contact-content-con .left-contact .contact-item p a { text-decoration: none; }
+.contact-content-con .left-contact .contact-item p a:hover { color: var(--color-secondary); }
+
+@media screen and (max-width: 600px) {
+  .contact-content-con .left-contact .contact-item { grid-template-columns: 1fr; }
+}
+
+/* label above value — avoids the ragged colon alignment entirely */
+.contact-content-con .left-contact .contact-item {
+  display: block;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.contact-content-con .left-contact .contact-item:last-child { border-bottom: none; }
+.contact-content-con .left-contact .contact-item .icon {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0 0 0.3rem;
+}
+.contact-content-con .left-contact .contact-item .icon span {
+  font-size: 0.76rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--color-grey-3);
+  white-space: nowrap;
+}
+.contact-content-con .left-contact .contact-item .icon i { width: 1.1rem; text-align: center; }
+.contact-content-con .left-contact .contact-item p {
+  margin: 0;
+  padding-left: 1.65rem;
+  font-size: 1.02rem;
+  line-height: 1.55;
+}
+
+/* stat cards: let content set the height instead of stretching to the bio */
+.about-container .right-about { align-content: start; }
+.about-container .right-about .about-item {
+  align-self: start;
+  min-height: 0;
+  padding: 1.5rem 1.3rem;
+}
+.about-container .right-about .about-item .abt-text .large-text { line-height: 1.05; }
